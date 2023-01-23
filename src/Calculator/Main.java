@@ -1,10 +1,12 @@
+package Calculator;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 class MyProgram {
     static public void main (String []args) throws FileNotFoundException {
-        String path = "src/test/input.txt";
+        String path = "src/Calculator/test/input.txt";
 
         File file = new File(path);
         Scanner sc = new Scanner(file);
