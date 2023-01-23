@@ -2,15 +2,20 @@ package Calculator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 class MyProgram {
     static public void main (String []args) throws FileNotFoundException {
-        String path = "src/Calculator/test/input.txt";
+        String inputPath = "src/Calculator/test/input.txt";
+        String outputPath = "src/Calculator/test/output.txt";
 
-        File file = new File(path);
-        Scanner sc = new Scanner(file);
+        File inputFile = new File(inputPath);
+        Scanner sc = new Scanner(inputFile);
+
         String line = sc.nextLine();
+        String result = "";
         sc.close();
 
         double firstNum = 0.0;
@@ -25,7 +30,7 @@ class MyProgram {
                 try {
                     firstNum = Double.parseDouble(num);
                 }catch(NumberFormatException e) {
-                    System.out.print("Error! Not number\n");
+                    result = "Error! Not number";
                     is = false;
                     break;
                 }
@@ -34,7 +39,7 @@ class MyProgram {
                 try {
                     secondNum = Double.parseDouble(num);
                 }catch(NumberFormatException e) {
-                    System.out.print("Error! Not number\n");
+                    result = "Error! Not number";
                     is = false;
                     break;
                 }
@@ -48,7 +53,7 @@ class MyProgram {
                     try {
                         sign = result(num);
                     }catch(Exception s){
-                        System.out.print("Operation Error!");
+                        result = "Operation Error!";
                         is = false;
                         break;
                     }
@@ -58,22 +63,29 @@ class MyProgram {
         if(is) {
             switch(sign){
                 case('+'):
-                    System.out.print(firstNum + secondNum);
+                    result = String.valueOf(firstNum + secondNum);
                     break;
                 case('-'):
-                    System.out.print(firstNum - secondNum);
+                    result = String.valueOf(firstNum - secondNum);
                     break;
                 case('*'):
-                    System.out.print(firstNum * secondNum);
+                    result = String.valueOf(firstNum * secondNum);
+
                     break;
                 case('/'):
                     if(secondNum == 0.0) {
-                        System.out.print("Error! Division by zero");
+                        result = "Error! Division by zero";
                     }else {
-                        System.out.print(firstNum / secondNum);
+                        result = String.valueOf(firstNum / secondNum);
                     }
                     break;
             }
+        }
+
+        try (FileWriter writer = new FileWriter(outputPath, false)) {
+            writer.write(result);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
