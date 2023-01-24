@@ -24,35 +24,35 @@ class MyProgram {
         int i = 0;
         boolean is = true;
 
-        for(String num:line.split(" ")) {
+        for (String num : line.split(" ")) {
             i++;
-            if(i == 1) {
+            if (i == 1) {
                 try {
                     firstNum = Double.parseDouble(num);
-                }catch(NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     result = "Error! Not number";
                     is = false;
                     break;
                 }
             }
-            if(i == 3) {
+            if (i == 3) {
                 try {
                     secondNum = Double.parseDouble(num);
-                }catch(NumberFormatException e) {
+                } catch(NumberFormatException e) {
                     result = "Error! Not number";
                     is = false;
                     break;
                 }
             }
         }
-        if(is) {
+        if (is) {
             i = 0;
-            for(String num:line.split(" ")) {
+            for (String num : line.split(" ")) {
                 i++;
-                if(i == 2) {
+                if (i == 2) {
                     try {
                         sign = result(num);
-                    }catch(Exception s){
+                    } catch(Exception s){
                         result = "Operation Error!";
                         is = false;
                         break;
@@ -60,22 +60,21 @@ class MyProgram {
                 }
             }
         }
-        if(is) {
-            switch(sign){
-                case('+'):
+        if (is) {
+            switch (sign) {
+                case '+':
                     result = String.valueOf(firstNum + secondNum);
                     break;
-                case('-'):
+                case '-':
                     result = String.valueOf(firstNum - secondNum);
                     break;
-                case('*'):
+                case '*':
                     result = String.valueOf(firstNum * secondNum);
-
                     break;
-                case('/'):
-                    if(secondNum == 0.0) {
+                case '/':
+                    if (secondNum == 0.0) {
                         result = "Error! Division by zero";
-                    }else {
+                    } else {
                         result = String.valueOf(firstNum / secondNum);
                     }
                     break;
@@ -90,7 +89,7 @@ class MyProgram {
     }
 
     public static char result(String nms) throws Exception {
-        if(nms.equals("/") || nms.equals("*") || nms.equals("+") || nms.equals("-")) {
+        if (nms.equals("/") || nms.equals("*") || nms.equals("+") || nms.equals("-")) {
             return nms.charAt(0);
         }
         else throw new Exception("OperationError");
