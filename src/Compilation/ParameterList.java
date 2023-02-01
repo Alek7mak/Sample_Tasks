@@ -1,6 +1,6 @@
 package Compilation;
 
-// size(), add(), get(), set(), remove(), insert(), find()
+// size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
 public class ParameterList<E> {
 
@@ -14,13 +14,14 @@ public class ParameterList<E> {
 
     public boolean add(E value) {
         if (size == 0) {
-            size = 1;
+            size++;
             data = new Object[size];
         } else {
             size++;
             Object[] buff = data;
             data = new Object[size];
-            for (int i = 0; i < size - 1; i++) {
+
+            for (int i = 0; i < size; i++) {
                 data[i] = buff[i];
             }
         }
@@ -34,25 +35,34 @@ public class ParameterList<E> {
 
     public E set(int index, E value) {
         E oldValue = (E) data[index];
-        data[index] = value;
+
+        Object[] buff = data;
+        data = new Object[++size];
+
+        for (int i = 0, j = 0; i < size; i++, j++) {
+            if (i == index) {
+                data[i] = value;
+                j--;
+            } else {
+                data[i] = buff[i];
+            }
+        }
         return oldValue;
     }
 
     public E remove(int index) {
+        E oldValue = (E) data[index];
+
         Object[] buff = data;
-        E oldValue = (E) buff[index];
-        buff[index] = null;
-        size--;
-        data = new Object[size];
+        data = new Object[--size];
 
         for (int i = 0, j = 0; i < size; i++, j++) {
-            if (buff[j] == null) {
-                i--;
+            if (i == index) {
+                j++;
             } else {
                 data[i] = buff[j];
             }
         }
-
         return oldValue;
     }
 
@@ -63,9 +73,9 @@ public class ParameterList<E> {
         for (int i = 0, j = 0; i < size; i++, j++) {
             if (i == index) {
                 data[i] = value;
-                j--;
+                j++;
             } else {
-                data[i] = buff[j];
+                data[i] = buff[i];
             }
         }
     }
