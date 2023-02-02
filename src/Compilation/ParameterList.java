@@ -12,21 +12,17 @@ public class ParameterList<E> {
         return size;
     }
 
-    public boolean add(E value) {
-        if (size == 0) {
-            size++;
-            data = new Object[size];
+    public void add(E value) {
+        size++;
+        Object[] buff;
+        if (size == 1) {
+            buff = new Object[size];
         } else {
-            size++;
-            Object[] buff = data;
-            data = new Object[size];
-
-            for (int i = 0; i < size; i++) {
-                data[i] = buff[i];
-            }
+            buff = new Object[size];
+            System.arraycopy(data, 0, buff, 0, size - 1);
         }
-        data[size - 1] = value;
-        return true;
+        buff[size - 1] = value;
+        data = buff;
     }
 
     public E get(int index) {
@@ -35,54 +31,44 @@ public class ParameterList<E> {
 
     public E set(int index, E value) {
         E oldValue = (E) data[index];
-
-        Object[] buff = data;
-        data = new Object[++size];
-
-        for (int i = 0, j = 0; i < size; i++, j++) {
-            if (i == index) {
-                data[i] = value;
-                j--;
-            } else {
-                data[i] = buff[i];
-            }
-        }
+        data[index] = value;
         return oldValue;
     }
 
     public E remove(int index) {
         E oldValue = (E) data[index];
-
-        Object[] buff = data;
-        data = new Object[--size];
+        size--;
+        Object[] buff = new Object[size];
 
         for (int i = 0, j = 0; i < size; i++, j++) {
             if (i == index) {
                 j++;
-            } else {
-                data[i] = buff[j];
             }
+            buff[i] = data[j];
         }
+        data = buff;
         return oldValue;
     }
 
     public void insert(int index, E value) {
-        Object[] buff = data;
-        data = new Object[++size];
+        size++;
+        Object[] buff = new Object[size];
 
         for (int i = 0, j = 0; i < size; i++, j++) {
             if (i == index) {
-                data[i] = value;
-                j++;
-            } else {
-                data[i] = buff[i];
+                buff[i] = value;
+                j--;
+            }
+            else {
+                buff[i] = data[j];
             }
         }
+        data = buff;
     }
 
     public int find(E value) {
         for (int i = 0; i < size; i++) {
-            if (data[i] == value) {
+            if (data[i].equals(value)) {
                 return i;
             }
         }

@@ -13,17 +13,17 @@ class Main {
         list.add("COLLISION");
         list.add("FALLING");
 
-        for (int i = 0; i < list.size(); i++) {
-            System.out.print(list.get(i) + " ");
-        }
-        System.out.println();
+        list.set(1, "SET");
+        list.remove(1);
         list.insert(1, "INSERT");
+        System.out.println(list.find("INSERT"));
+        System.out.println(list.find("NONE"));
 
         for (int i = 0; i < list.size(); i++) {
             System.out.print(list.get(i) + " ");
         }
         System.out.println();
-
+//        list.insert(1, "INSERT");
     }
 
     private static Comparator<Map.Entry<String, Integer>> descendingFrequencyOrder() {
