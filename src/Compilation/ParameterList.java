@@ -49,29 +49,11 @@ public class ParameterList<E> {
         data = buff;
         return oldValue;
     }
+//insert(index value) find(value)
 
-    public void insert(int index, E value) {
-        size++;
-        Object[] buff = new Object[size];
+    public E insert(int index, E value) {
+        E oldValue = (E) data[index];
 
-        for (int i = 0, j = 0; i < size; i++, j++) {
-            if (i == index) {
-                buff[i] = value;
-                j--;
-            }
-            else {
-                buff[i] = data[j];
-            }
-        }
-        data = buff;
-    }
-
-    public int find(E value) {
-        for (int i = 0; i < size; i++) {
-            if (data[i].equals(value)) {
-                return i;
-            }
-        }
-        return -1;
+        return oldValue;
     }
 }

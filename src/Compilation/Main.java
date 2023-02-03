@@ -23,7 +23,6 @@ class Main {
             System.out.print(list.get(i) + " ");
         }
         System.out.println();
-//        list.insert(1, "INSERT");
     }
 
     private static Comparator<Map.Entry<String, Integer>> descendingFrequencyOrder() {
