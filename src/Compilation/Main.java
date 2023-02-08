@@ -8,26 +8,85 @@ import java.util.stream.*;
 
 class Main {
 
-    public static boolean isPalindrome(String text) {
-        String newText = text.replaceAll("[^A-Za-z1-9]+", "");
-        String reverse = new StringBuilder(newText).reverse().toString();
-        return newText.equalsIgnoreCase(reverse);
+
+    public static String getCallerClassAndMethodName() {
+        StackTraceElement[] stackTrace = new Throwable().getStackTrace();
+
+        if (stackTrace.length > 2) {
+            return stackTrace[2].getClassName() + "#" + stackTrace[2].getMethodName();
+        }
+        return null;
+    }
+
+    public final class ComplexNumber {
+        private final double re;
+        private final double im;
+
+        public ComplexNumber(double re, double im) {
+            this.re = re;
+            this.im = im;
+        }
+
+        public double getRe() {
+            return re;
+        }
+
+        public double getIm() {
+            return im;
+        }
+
+
+
+    }
+
+
+    public interface RobotConnection extends AutoCloseable {
+        void moveRobotTo(int x, int y);
+        @Override
+        void close();
+    }
+
+    public interface RobotConnectionManager {
+        RobotConnection getConnection();
+    }
+
+    public static class RobotConnectionException extends RuntimeException {
+
+        public RobotConnectionException(String message) {
+            super(message);
+
+        }
+
+        public RobotConnectionException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
+
+    public static void moveRobot(RobotConnectionManager robotConnectionManager, int toX, int toY) {
+        boolean isMove = false;
+
+        for (int i = 0; i < 3; i++) {
+            try (RobotConnection rc = robotConnectionManager.getConnection()) {
+                rc.moveRobotTo(toX, toY);
+                isMove = true;
+                i = 3;
+            } catch (RobotConnectionException ignore) {
+
+            }
+        }
+        if (!isMove) {
+            throw new RobotConnectionException("Can't move");
+        }
     }
 
     public static void main(String[] args) {
-        BigInteger bigInteger = BigInteger.ONE;
-        int value =2;
 
-        for (int i = 0; i < 4; i++) {
-            bigInteger.multiply(BigInteger.valueOf(value));
-        }
-        System.out.println(isPalindrome("Madam, I'm Adam!"));
 
 //        ParameterList<String> list = new ParameterList<>();
 //        list.add("EXCEPTION");
 //        list.add("COLLISION");
 //        list.add("FALLING");
-//
+//ф
 //        list.set(1, "SET");
 //        list.remove(1);
 //        list.insert(1, "INSERT");
@@ -47,12 +106,16 @@ class Main {
     }
 
     public static double integrate(DoubleUnaryOperator f, double a, double b) {
-        double step = 1e-6;
-        while (a < b) {
-            a += step * f.applyAsDouble((step));
+        double step = 1e-7;
+        double result = 0;
+
+        while (a <= b) {
+            result += step * f.applyAsDouble(a);
+            a+= step;
         }
-        return a;
+        return result;
     }
+
 
     public static <T> void findMinMax(
             Stream<? extends T> stream,
