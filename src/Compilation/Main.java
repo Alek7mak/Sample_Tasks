@@ -7,22 +7,37 @@ import java.util.function.*;
 import java.util.stream.*;
 
 class Main {
+
+    public static boolean isPalindrome(String text) {
+        String newText = text.replaceAll("[^A-Za-z1-9]+", "");
+        String reverse = new StringBuilder(newText).reverse().toString();
+        return newText.equalsIgnoreCase(reverse);
+    }
+
     public static void main(String[] args) {
-        ParameterList<String> list = new ParameterList<>();
-        list.add("EXCEPTION");
-        list.add("COLLISION");
-        list.add("FALLING");
+        BigInteger bigInteger = BigInteger.ONE;
+        int value =2;
 
-        list.set(1, "SET");
-        list.remove(1);
-        list.insert(1, "INSERT");
-        System.out.println(list.find("INSERT"));
-        System.out.println(list.find("NONE"));
-
-        for (int i = 0; i < list.size(); i++) {
-            System.out.print(list.get(i) + " ");
+        for (int i = 0; i < 4; i++) {
+            bigInteger.multiply(BigInteger.valueOf(value));
         }
-        System.out.println();
+        System.out.println(isPalindrome("Madam, I'm Adam!"));
+
+//        ParameterList<String> list = new ParameterList<>();
+//        list.add("EXCEPTION");
+//        list.add("COLLISION");
+//        list.add("FALLING");
+//
+//        list.set(1, "SET");
+//        list.remove(1);
+//        list.insert(1, "INSERT");
+//        System.out.println(list.find("INSERT"));
+//        System.out.println(list.find("NONE"));
+//
+//        for (int i = 0; i < list.size(); i++) {
+//            System.out.print(list.get(i) + " ");
+//        }
+//        System.out.println();
     }
 
     private static Comparator<Map.Entry<String, Integer>> descendingFrequencyOrder() {
