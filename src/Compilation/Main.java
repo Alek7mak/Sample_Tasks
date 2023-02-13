@@ -79,6 +79,22 @@ class Main {
 
         ParameterList<String> parameterList = new ParameterList<>();
 
+        parameterList.add("Parameter1");
+        parameterList.add("Parameter2");
+        parameterList.add("Parameter3");
+
+        // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
+
+        System.out.println(parameterList);
+        System.out.println(parameterList.size());
+        System.out.println(parameterList.get(0));
+        parameterList.set(0, "setParameter");
+        System.out.println(parameterList);
+        parameterList.remove(0);
+        System.out.println(parameterList);
+        parameterList.insert(0, "Parameter1");
+        System.out.println(parameterList);
+        System.out.println(parameterList.find("Parameter1"));
 
 
         int sum1 = IntStream.iterate(1, n -> n + 1)
