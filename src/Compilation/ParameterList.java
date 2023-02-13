@@ -2,58 +2,36 @@ package Compilation;
 
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
-public class ParameterList<E> {
+public class ParameterList<T> {
 
-    private int size = 0;
-    Object[] data;
+    private int size;
+    private Object[] data;
 
+    ///////////////////////// Methods /////////////////////////
 
-    public int size() {
-        return size;
-    }
+    
 
-    public void add(E value) {
-        size++;
-        Object[] buff;
-        if (size == 1) {
-            buff = new Object[size];
+// size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
+
+    private int checkIndex(int index) {
+        if (index >= 0 || index <= size) {
+            return index;
         } else {
-            buff = new Object[size];
-            System.arraycopy(data, 0, buff, 0, size - 1);
+            throw new ArrayIndexOutOfBoundsException("Wrong index!");
         }
-        buff[size - 1] = value;
-        data = buff;
     }
 
-    public E get(int index) {
-        return (E) data[index];
+    @SuppressWarnings("unchecked")
+    private T data(int index) {
+        return (T) data[index];
     }
 
-    public E set(int index, E value) {
-        E oldValue = (E) data[index];
-        data[index] = value;
-        return oldValue;
-    }
-
-    public E remove(int index) {
-        E oldValue = (E) data[index];
-        size--;
-        Object[] buff = new Object[size];
-
-        for (int i = 0, j = 0; i < size; i++, j++) {
-            if (i == index) {
-                j++;
-            }
-            buff[i] = data[j];
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            stringBuilder.append(data(i)).append(i == size - 1 ? "" : " ");
         }
-        data = buff;
-        return oldValue;
-    }
-//insert(index value) find(value)
-
-    public E insert(int index, E value) {
-        E oldValue = (E) data[index];
-
-        return oldValue;
+        return stringBuilder.toString();
     }
 }

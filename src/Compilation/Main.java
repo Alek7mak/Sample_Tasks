@@ -77,6 +77,7 @@ class Main {
 
     public static void main(String[] args) throws Exception {
 
+        ParameterList<String> parameterList = new ParameterList<>();
 
 
 
