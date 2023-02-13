@@ -1,123 +1,151 @@
 package Compilation;
 
+
 import java.io.*;
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
 class Main {
 
+    public static int checkSumOfStream(InputStream inputStream) throws IOException {
+        int sum = 0;
+        int read;
 
-    public static String getCallerClassAndMethodName() {
-        StackTraceElement[] stackTrace = new Throwable().getStackTrace();
-
-        if (stackTrace.length > 2) {
-            return stackTrace[2].getClassName() + "#" + stackTrace[2].getMethodName();
+        while ((read = inputStream.read()) > 0) {
+            sum = Integer.rotateLeft(sum, 1) ^ read;
         }
-        return null;
+
+        return sum;
     }
 
-    public final class ComplexNumber {
-        private final double re;
-        private final double im;
+    static class Animal implements Serializable {
+        private final String name;
 
-        public ComplexNumber(double re, double im) {
-            this.re = re;
-            this.im = im;
-        }
-
-        public double getRe() {
-            return re;
-        }
-
-        public double getIm() {
-            return im;
-        }
-
-        @Override
-        public int hashCode() {
-            int result;
-            long temp;
-
-            temp = Double.doubleToLongBits(re);
-            result = (int) (temp - (temp >>> 32));
-            temp = Double.doubleToLongBits(im);
-            result = 37 * result + (int) (temp - (temp >>> 32));
-            return result;
+        public Animal(String name) {
+            this.name = name;
         }
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null && getClass() != o.getClass()) return false;
-
-            ComplexNumber that = (ComplexNumber) o;
-
-            if (Double.compare(that.re, re) != 0) return false;
-            return Double.compare(that.im, im) == 0;
-        }
-    }
-
-
-    public interface RobotConnection extends AutoCloseable {
-        void moveRobotTo(int x, int y);
-        @Override
-        void close();
-    }
-
-    public interface RobotConnectionManager {
-        RobotConnection getConnection();
-    }
-
-    public static class RobotConnectionException extends RuntimeException {
-
-        public RobotConnectionException(String message) {
-            super(message);
-
-        }
-
-        public RobotConnectionException(String message, Throwable cause) {
-            super(message, cause);
-        }
-    }
-
-    public static void moveRobot(RobotConnectionManager robotConnectionManager, int toX, int toY) {
-        boolean isMove = false;
-
-        for (int i = 0; i < 3; i++) {
-            try (RobotConnection rc = robotConnectionManager.getConnection()) {
-                rc.moveRobotTo(toX, toY);
-                isMove = true;
-                i = 3;
-            } catch (RobotConnectionException ignore) {
-
+            if (o instanceof Animal) {
+                return Objects.equals(name, ((Animal) o).name);
             }
-        }
-        if (!isMove) {
-            throw new RobotConnectionException("Can't move");
+            return false;
         }
     }
 
-    public static void main(String[] args) {
+
+    public static <T> Set<T> symmetricDifference(Set<? extends T> set1, Set<? extends T> set2) {
+        Set<T> setClone1 = new HashSet<>(set1);
+        Set<T> setClone2 = new HashSet<>(set2);
+
+        setClone1.removeAll(set2);
+        setClone2.removeAll(set1);
+        setClone1.addAll(setClone2);
+
+        return setClone1;
+    }
+
+    public static <T, U> Function<T, U> ternaryOperator(
+            Predicate<? super T> condition,
+            Function<? super T, ? extends U> ifTrue,
+            Function<? super T, ? extends U> ifFalse) {
+
+        return x -> condition.test(x) ? ifTrue.apply(x) : ifFalse.apply(x);
+    }
+
+    public static <T> void findMinMax(
+            Stream<? extends T> stream,
+            Comparator<? super T> order,
+            BiConsumer<? super T, ? super T> minMaxConsumer) {
+
+        List<T> list = stream.collect(Collectors.toList());
+
+        if (list.isEmpty()) {
+            minMaxConsumer.accept(null, null);
+        } else {
+            minMaxConsumer.accept(list.stream().max(order).get(), list.stream().min(order).get());
+        }
+    }
+
+    //////////////////////// Main ////////////////////////
+
+    public static void main(String[] args) throws Exception {
 
 
-//        ParameterList<String> list = new ParameterList<>();
-//        list.add("EXCEPTION");
-//        list.add("COLLISION");
-//        list.add("FALLING");
-//ф
-//        list.set(1, "SET");
-//        list.remove(1);
-//        list.insert(1, "INSERT");
-//        System.out.println(list.find("INSERT"));
-//        System.out.println(list.find("NONE"));
+
+
+        int sum1 = IntStream.iterate(1, n -> n + 1)
+            .filter(n -> n % 5 == 0 && n % 2 != 0)
+            .limit(10)
+            .map(n -> n * n)
+            .sum();
+
+        Set<String> set = new HashSet<>();
+        Stream<String> stream1 = set.stream();
+
+        IntStream chars = "word".chars();
+
+        Path path = Paths.get("C:/Java/Sample_Tasks");
+        Stream<Path> stream2 = Files.list(path);
+        Stream<Path> stream3 = Files.walk(path);
+
+        DoubleStream randomNumbers = DoubleStream.generate(Math::random);
+
+        IntStream integers = IntStream.iterate(1, n -> ++n);
+
+        IntStream hundredInt = IntStream.range(0, 11);
+
+        IntStream tenIntegers = IntStream.rangeClosed(0, 11);
+
+        IntStream combinedStreams = IntStream.concat(hundredInt, tenIntegers);
+
+        IntStream empty = IntStream.empty();
+
+        double[] array = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        DoubleStream doubleStream = Arrays.stream(array);
+
+        IntStream stream4 = IntStream.of(1, 2, 3, 4, 5);
+
+//        doubleStream.filter(n -> n < 5)
+//                .mapToObj(Double::toString)
+//                .flatMapToInt(String::chars)
+//                .distinct() //dubles
+//                .peek(System.out::println)
+//                .sorted()
+//                .skip(2)
+//                .limit(1)
+//                .forEach(System.out::println);
+
+        stream4.filter(n -> n < 5)
+                .allMatch(n -> n <5);
+
+        Stream<String> stream = Stream.of("A", "Mass", "ABs");
+        List<String> list = stream.collect(Collectors.toList());
+
+        int n = 13;
+        BigInteger bigInteger = IntStream.rangeClosed(1, n)
+                .mapToObj(t -> BigInteger.valueOf(n))
+                .reduce(BigInteger.ONE, BigInteger::multiply);
+
+
+        String s = "Ab21 2ba";
+        StringBuilder leftToRight = new StringBuilder();
 //
-//        for (int i = 0; i < list.size(); i++) {
-//            System.out.print(list.get(i) + " ");
-//        }
-//        System.out.println();
+//        s.chars().filter(Character::isLetterOrDigit)
+//                .map(Character::toLowerCase)
+//                .forEach(leftToRight::appendCodePoint);
+
+        StringBuilder rightToLeft = new StringBuilder(leftToRight).reverse();
+
+        boolean isPalindrome = leftToRight.toString().equals(rightToLeft.toString());
     }
+
 
     private static Comparator<Map.Entry<String, Integer>> descendingFrequencyOrder() {
         return Comparator.<Map.Entry<String, Integer>>comparingInt(Map.Entry::getValue)
@@ -136,43 +164,12 @@ class Main {
         return result;
     }
 
-
-    public static <T> void findMinMax(
-            Stream<? extends T> stream,
-            Comparator<? super T> order,
-            BiConsumer<? super T, ? super T> minMaxConsumer) {
-
-        List<T> list = stream.sorted(order).collect(Collectors.toList());
-
-        if (list.isEmpty()) {
-            minMaxConsumer.accept(null, null);
-        } else {
-            minMaxConsumer.accept(list.get(0), list.get(list.size() - 1));
-        }
-    }
-
-
     public static BigInteger factorial(int n) {
         return IntStream.rangeClosed(1, n)
                 .mapToObj(BigInteger::valueOf)
                 .reduce(BigInteger.ONE, BigInteger::multiply);
     }
 
-    private static Function<String, Integer> ternaryOperator(Predicate<Object> condition,
-                                                             Function<Object, Integer> ifTrue,
-                                                             Function<CharSequence, Integer> ifFalse) {
-        return t -> condition.test(t) ? ifTrue.apply(t) : ifFalse.apply(t);
-    }
-
-    public static <T> Set<T> symmetricDifference(Set<? extends T> set1, Set<? extends T> set2) {
-        Set<T> result = new HashSet<>(set1);
-        Set<T> set2Clone = new HashSet<>(set2);
-
-        result.removeIf(set2Clone::remove);
-        result.addAll(set2Clone);
-
-        return result;
-    }
 
     public static class Pair<T, U> {
 
