@@ -73,35 +73,13 @@ class Main {
         }
     }
 
-    //////////////////////// Main ////////////////////////
+
+
+    //////////////////////////////////////////////// Main ////////////////////////////////////////////////
 
     public static void main(String[] args) throws Exception {
 
-        ParameterList<String> parameterList = new ParameterList<>();
 
-        parameterList.add("Parameter1");
-        parameterList.add("Parameter2");
-        parameterList.add("Parameter3");
-
-        // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
-
-        System.out.println(parameterList);
-        System.out.println(parameterList.size());
-        System.out.println(parameterList.get(0));
-        parameterList.set(0, "setParameter");
-        System.out.println(parameterList);
-        parameterList.remove(0);
-        System.out.println(parameterList);
-        parameterList.insert(0, "Parameter1");
-        System.out.println(parameterList);
-        System.out.println(parameterList.find("Parameter1"));
-
-
-        int sum1 = IntStream.iterate(1, n -> n + 1)
-            .filter(n -> n % 5 == 0 && n % 2 != 0)
-            .limit(10)
-            .map(n -> n * n)
-            .sum();
 
         Set<String> set = new HashSet<>();
         Stream<String> stream1 = set.stream();
@@ -114,7 +92,7 @@ class Main {
 
         DoubleStream randomNumbers = DoubleStream.generate(Math::random);
 
-        IntStream integers = IntStream.iterate(1, n -> ++n);
+
 
         IntStream hundredInt = IntStream.range(0, 11);
 
@@ -124,32 +102,11 @@ class Main {
 
         IntStream empty = IntStream.empty();
 
-        double[] array = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        DoubleStream doubleStream = Arrays.stream(array);
-
         IntStream stream4 = IntStream.of(1, 2, 3, 4, 5);
 
-//        doubleStream.filter(n -> n < 5)
-//                .mapToObj(Double::toString)
-//                .flatMapToInt(String::chars)
-//                .distinct() //dubles
-//                .peek(System.out::println)
-//                .sorted()
-//                .skip(2)
-//                .limit(1)
-//                .forEach(System.out::println);
-
-        stream4.filter(n -> n < 5)
-                .allMatch(n -> n <5);
 
         Stream<String> stream = Stream.of("A", "Mass", "ABs");
         List<String> list = stream.collect(Collectors.toList());
-
-        int n = 13;
-        BigInteger bigInteger = IntStream.rangeClosed(1, n)
-                .mapToObj(t -> BigInteger.valueOf(n))
-                .reduce(BigInteger.ONE, BigInteger::multiply);
-
 
         String s = "Ab21 2ba";
         StringBuilder leftToRight = new StringBuilder();
