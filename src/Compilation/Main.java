@@ -74,17 +74,79 @@ class Main {
     }
 
 
+    public static void stockBuy(int m, int[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            if (array[i] >= m) continue;
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[i] + array[j] == m) {
+                    System.out.println(i + " " + j);
+                }
+            }
+        }
+    }
+
+
+
+
+    public static String hashPass(String password) {
+        int code = password.hashCode();
+        return Integer.toString(code);
+    }
+
+    public static String allowedChars = "0123456789";
+
+    public static String bruteforcePass(String hashedPass) {
+        int code=Integer.parseInt(hashedPass);
+        for (int i = 0; i < 100000; i++) {
+            String hashed = Integer.toString(i);
+            int code2 = hashed.hashCode();
+            if(code==code2)
+                return hashed;
+        }
+        for (int i = 0; i < 10000; i++) {
+            String hashed ="0"+i;
+            int code2 = hashed.hashCode();
+            if(code==code2)
+                return hashed;
+        }
+        for (int i = 0; i < 1000; i++) {
+            String hashed ="00"+i;
+            int code2 = hashed.hashCode();
+            if(code==code2)
+                return hashed;
+        }
+        for (int i = 0; i < 100; i++) {
+            String hashed ="000"+i;
+            int code2 = hashed.hashCode();
+            if(code==code2)
+                return hashed;
+        }
+        for (int i = 0; i < 10; i++) {
+            String hashed ="0000"+i;
+            int code2 = hashed.hashCode();
+            if(code==code2)
+                return hashed;
+        }
+        return "";
+    }
+
 
     //////////////////////////////////////////////// Main ////////////////////////////////////////////////
 
     public static void main(String[] args) throws Exception {
+
+        System.out.println(bruteforcePass("52663"));
+
+
+
+
 
 
 
         Set<String> set = new HashSet<>();
         Stream<String> stream1 = set.stream();
 
-        IntStream chars = "word".chars();
+//        IntStream chars = "word".chars();
 
         Path path = Paths.get("C:/Java/Sample_Tasks");
         Stream<Path> stream2 = Files.list(path);
@@ -120,12 +182,6 @@ class Main {
         boolean isPalindrome = leftToRight.toString().equals(rightToLeft.toString());
     }
 
-
-    private static Comparator<Map.Entry<String, Integer>> descendingFrequencyOrder() {
-        return Comparator.<Map.Entry<String, Integer>>comparingInt(Map.Entry::getValue)
-                .reversed()
-                .thenComparing(Map.Entry::getKey);
-    }
 
     public static double integrate(DoubleUnaryOperator f, double a, double b) {
         double step = 1e-7;
