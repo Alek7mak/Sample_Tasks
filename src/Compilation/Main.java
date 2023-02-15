@@ -1,11 +1,14 @@
 package Compilation;
 
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.*;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.spec.RSAOtherPrimeInfo;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
@@ -104,25 +107,25 @@ class Main {
                 return hashed;
         }
         for (int i = 0; i < 10000; i++) {
-            String hashed ="0"+i;
+            String hashed ="0" + i;
             int code2 = hashed.hashCode();
             if(code==code2)
                 return hashed;
         }
         for (int i = 0; i < 1000; i++) {
-            String hashed ="00"+i;
+            String hashed ="00" + i;
             int code2 = hashed.hashCode();
             if(code==code2)
                 return hashed;
         }
         for (int i = 0; i < 100; i++) {
-            String hashed ="000"+i;
+            String hashed ="000" + i;
             int code2 = hashed.hashCode();
             if(code==code2)
                 return hashed;
         }
         for (int i = 0; i < 10; i++) {
-            String hashed ="0000"+i;
+            String hashed ="0000" + i;
             int code2 = hashed.hashCode();
             if(code==code2)
                 return hashed;
@@ -131,11 +134,21 @@ class Main {
     }
 
 
-    //////////////////////////////////////////////// Main ////////////////////////////////////////////////
+
+
+        //////////////////////////////////////////////// Main ////////////////////////////////////////////////
 
     public static void main(String[] args) throws Exception {
 
-        System.out.println(bruteforcePass("52663"));
+
+
+
+
+
+        char[] str  = {'h', 'e', 'l', 'l', 'o'};
+        char[] str2  = {'e', 'h', 'l', 'l', 'o'};
+
+
 
 
 
