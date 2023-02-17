@@ -1,19 +1,19 @@
-package Compilation;
+    package Compilation;
 
 
-import org.w3c.dom.ls.LSOutput;
+    import org.w3c.dom.ls.LSOutput;
 
-import java.io.*;
-import java.math.BigInteger;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.spec.RSAOtherPrimeInfo;
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+    import javax.sound.midi.Soundbank;
+    import java.io.*;
+    import java.math.BigInteger;
+    import java.nio.file.Files;
+    import java.nio.file.Path;
+    import java.nio.file.Paths;
+    import java.util.*;
+    import java.util.function.*;
+    import java.util.stream.*;
 
-class Main {
+    class Main {
 
     public static int checkSumOfStream(InputStream inputStream) throws IOException {
         int sum = 0;
@@ -136,6 +136,8 @@ class Main {
 
 
 
+
+
         //////////////////////////////////////////////// Main ////////////////////////////////////////////////
 
     public static void main(String[] args) throws Exception {
@@ -145,15 +147,9 @@ class Main {
 
 
 
-        char[] str  = {'h', 'e', 'l', 'l', 'o'};
-        char[] str2  = {'e', 'h', 'l', 'l', 'o'};
 
 
-
-
-
-
-
+    
 
 
         Set<String> set = new HashSet<>();
@@ -183,7 +179,7 @@ class Main {
         Stream<String> stream = Stream.of("A", "Mass", "ABs");
         List<String> list = stream.collect(Collectors.toList());
 
-        String s = "Ab21 2ba";
+        String qs = "Ab21 2ba";
         StringBuilder leftToRight = new StringBuilder();
 //
 //        s.chars().filter(Character::isLetterOrDigit)
@@ -319,3 +315,4 @@ class Main {
 
     }
 }
+
