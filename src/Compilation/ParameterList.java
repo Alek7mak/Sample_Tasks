@@ -11,12 +11,80 @@ public class ParameterList<T> {
 
     ///////////////////////// Methods /////////////////////////
 
+    public int size() {
+        return size;
+    }
 
-
-    private int checkIndex(int index) {
-        if (index >= 0 && index <= size) {
-            return index;
+    public boolean add(T value) {
+        if (size == 0) {
+            data = new Object[1];
         } else {
+            data = Arrays.copyOf(data, size + 1);
+        }
+        size++;
+        data[size - 1] = value;
+        return true;
+    }
+
+    public T get(int index) {
+        checkIndex(index);
+        return data(index);
+    }
+
+    public T set(int index, T value) {
+        checkIndex(index);
+        T oldValue = data(index);
+        data[index] = value;
+        return oldValue;
+    }
+
+    public T remove(int index) {
+        checkIndex(index);
+        T oldValue = data(index);
+        size--;
+        Object[] temp = data;
+        data = new Object[size];
+
+        for (int i = 0; i < size; i++) {
+            if (i < index) {
+                data[i] = temp[i];
+            } else {
+                data[i] = temp[i + 1];
+            }
+        }
+
+        return oldValue;
+    }
+
+    public T insert(int index, T value) {
+        checkIndex(index);
+        T oldValue = data(index);
+        size++;
+        Object[] temp = data;
+        data = new Object[size];
+
+        for (int i = 0; i < size; i++) {
+            data[index] = value;
+
+            if (i < index) {
+                data[i] = temp[i];
+            } else if (i > index) {
+                data[i] = temp[i - 1];
+            }
+        }
+
+        return oldValue;
+    }
+
+    public int find(T value) {
+        for (int i = 0; i < size; i++) {
+            if (data[i] == value) return i;
+        }
+        return -1;
+    }
+
+    private void checkIndex(int index) {
+        if (index < 0 || index >= size) {
             throw new ArrayIndexOutOfBoundsException("Wrong index!");
         }
     }

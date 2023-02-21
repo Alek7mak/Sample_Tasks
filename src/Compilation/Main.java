@@ -142,14 +142,27 @@
 
     public static void main(String[] args) throws Exception {
 
+        ParameterList<Integer> list1 = new ParameterList<>();
+
+        list1.add(1);
+        list1.add(2);
+        list1.add(3);
+        list1.add(4);
+        list1.add(5);
+
+        System.out.println(list1.size());
+        System.out.println(list1.get(4));
+        System.out.println(list1.set(0, 9));
+        System.out.println(list1);
+        list1.remove(2);
+        System.out.println(list1);
+        list1.insert(2, 3);
+        System.out.println(list1);
+        System.out.println(list1.find(9));
 
 
+// size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
-
-
-
-
-    
 
 
         Set<String> set = new HashSet<>();
