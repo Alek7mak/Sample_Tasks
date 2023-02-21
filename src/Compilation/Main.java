@@ -1,19 +1,16 @@
-    package Compilation;
+package Compilation;
 
 
-    import org.w3c.dom.ls.LSOutput;
+import java.io.*;
+import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
-    import javax.sound.midi.Soundbank;
-    import java.io.*;
-    import java.math.BigInteger;
-    import java.nio.file.Files;
-    import java.nio.file.Path;
-    import java.nio.file.Paths;
-    import java.util.*;
-    import java.util.function.*;
-    import java.util.stream.*;
-
-    class Main {
+class Main {
 
     public static int checkSumOfStream(InputStream inputStream) throws IOException {
         int sum = 0;
@@ -133,7 +130,24 @@
         return "";
     }
 
+    public static double integrate(DoubleUnaryOperator f, double a, double b) {
+        double step = 1e-6;
+        double result = 0;
 
+        for (double i = a; i <= b;) {
+            result += step * f.applyAsDouble(a);
+            a += step;
+        }
+        return result;
+    }
+
+
+    public static double sqrt(double x) {
+        if (x < 0) {
+            throw new IllegalArgumentException("Expected non-negative number, got " + x);
+        }
+        return Math.sqrt(x);
+    }
 
 
 
@@ -142,26 +156,12 @@
 
     public static void main(String[] args) throws Exception {
 
-        ParameterList<Integer> list1 = new ParameterList<>();
-
-        list1.add(1);
-        list1.add(2);
-        list1.add(3);
-        list1.add(4);
-        list1.add(5);
-
-        System.out.println(list1.size());
-        System.out.println(list1.get(4));
-        System.out.println(list1.set(0, 9));
-        System.out.println(list1);
-        list1.remove(2);
-        System.out.println(list1);
-        list1.insert(2, 3);
-        System.out.println(list1);
-        System.out.println(list1.find(9));
+        sqrt(-1);
 
 
-// size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
+
+
+
 
 
 
@@ -202,18 +202,6 @@
         StringBuilder rightToLeft = new StringBuilder(leftToRight).reverse();
 
         boolean isPalindrome = leftToRight.toString().equals(rightToLeft.toString());
-    }
-
-
-    public static double integrate(DoubleUnaryOperator f, double a, double b) {
-        double step = 1e-7;
-        double result = 0;
-
-        while (a <= b) {
-            result += step * f.applyAsDouble(a);
-            a+= step;
-        }
-        return result;
     }
 
     public static BigInteger factorial(int n) {
@@ -328,4 +316,3 @@
 
     }
 }
-

@@ -15,7 +15,7 @@ public class ParameterList<T> {
         return size;
     }
 
-    public boolean add(T value) {
+    public void add(T value) {
         if (size == 0) {
             data = new Object[1];
         } else {
@@ -23,7 +23,6 @@ public class ParameterList<T> {
         }
         size++;
         data[size - 1] = value;
-        return true;
     }
 
     public T get(int index) {
@@ -40,7 +39,7 @@ public class ParameterList<T> {
 
     public T remove(int index) {
         checkIndex(index);
-        T oldValue = data(index);
+        T oldValue = data(index);;
         size--;
         Object[] temp = data;
         data = new Object[size];
@@ -52,28 +51,23 @@ public class ParameterList<T> {
                 data[i] = temp[i + 1];
             }
         }
-
         return oldValue;
     }
 
-    public T insert(int index, T value) {
+    public void insert(int index, T value) {
         checkIndex(index);
-        T oldValue = data(index);
         size++;
         Object[] temp = data;
         data = new Object[size];
+        data[index] = value;
 
         for (int i = 0; i < size; i++) {
-            data[index] = value;
-
             if (i < index) {
                 data[i] = temp[i];
             } else if (i > index) {
                 data[i] = temp[i - 1];
             }
         }
-
-        return oldValue;
     }
 
     public int find(T value) {
