@@ -23,8 +23,6 @@ public class MailMessage extends AbstractSendable {
 
         MailMessage that = (MailMessage) o;
 
-        if (!Objects.equals(message, that.message)) return false;
-
-        return true;
+        return Objects.equals(message, that.message);
     }
 }

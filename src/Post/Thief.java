@@ -2,31 +2,31 @@ package Post;
 
 public class Thief implements MailService {
 
-    private final int minPrice;
-    private int stolenValue = 0;
-
+    private int minPrice;
+    private int stolenValue;
 
     public Thief(int minPrice) {
         this.minPrice = minPrice;
     }
 
+    public int getStolenValue() {
+        return stolenValue;
+    }
 
     @Override
     public Sendable processMail(Sendable mail) {
-
         if (mail instanceof MailPackage) {
-            Package pac = ((MailPackage) mail).getContent();
+            Package aPackage = ((MailPackage) mail).getContent();
 
-            if (pac.getPrice() >= minPrice) {
-                stolenValue += pac.getPrice();
-                return new MailPackage(mail.getFrom(), mail.getTo(), new Package("stones instead of " + pac.getContent(), 0));
+            if (aPackage.getPrice() >= minPrice) {
+                stolenValue += aPackage.getPrice();
+                return new MailPackage(
+                        mail.getFrom(),
+                        mail.getTo(),
+                        new Package("stones instead of " + aPackage.getContent() + "", 0));
             }
         }
         return mail;
-    }
-
-    public int getStolenValue() {
-        return stolenValue;
     }
 }
 

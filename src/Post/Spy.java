@@ -4,25 +4,24 @@ import java.util.logging.Logger;
 
 public class Spy implements MailService {
 
-    private Logger LOGGER = Logger.getLogger("Spy");
+    private Logger logger;
 
-
-    public Spy(Logger LOGGER) {
-        this.LOGGER = LOGGER;
+    public Spy(Logger logger) {
+        this.logger = logger;
     }
 
     @Override
     public Sendable processMail(Sendable mail) {
-        if (mail instanceof MailMessage) {
-            MailMessage mailMessage = (MailMessage) mail;
-            String from = mailMessage.getFrom();
-            String to = mailMessage.getTo();
 
-            if (from.equals("AUSTIN_POWERS") || to.equals("AUSTIN_POWERS")) {
-                LOGGER.warning("Detected target mail correspondence: from " + from + " to " + to +
-                        " \"" + mailMessage.getMessage() + "\"");
+        if (mail instanceof MailMessage) {
+            String from = mail.getFrom();
+            String to = mail.getTo();
+            String message = ((MailMessage) mail).getMessage();
+
+            if (from.equals(AUSTIN_POWERS) || to.equals(AUSTIN_POWERS)) {
+                logger.warning("Detected target mail correspondence: from " + from + " to " + to + " " + message + "");
             } else {
-                LOGGER.info("Usual correspondence: from " + from + " to " + to + "");
+                logger.info("Usual correspondence: from " + from + " to " + to + "");
             }
         }
         return mail;

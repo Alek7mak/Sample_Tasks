@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.*;
+import java.util.logging.*;
 import java.util.stream.*;
 
 class Main {
@@ -141,22 +142,32 @@ class Main {
         return result;
     }
 
+    //////////////////////////////////////////////// Methods ////////////////////////////////////////////////
 
-    public static double sqrt(double x) {
-        if (x < 0) {
-            throw new IllegalArgumentException("Expected non-negative number, got " + x);
-        }
-        return Math.sqrt(x);
+    private static void configureLogging() {
+        Logger loggerA = Logger.getLogger("org.java.logging.ClassA");
+        loggerA.setLevel(Level.ALL);
+
+        Logger loggerB = Logger.getLogger("org.java.logging.ClassB");
+        loggerB.setLevel(Level.WARNING);
+
+        Logger loggerC = Logger.getLogger("org.java");
+
+        Handler handler = new ConsoleHandler();
+        handler.setLevel(Level.ALL);
+        handler.setFormatter(new XMLFormatter());
+
+        loggerC.setUseParentHandlers(false);
+        loggerC.addHandler(handler);
+
     }
 
 
 
 
-        //////////////////////////////////////////////// Main ////////////////////////////////////////////////
+    //////////////////////////////////////////////// Main ////////////////////////////////////////////////
 
     public static void main(String[] args) throws Exception {
-
-        sqrt(-1);
 
 
 

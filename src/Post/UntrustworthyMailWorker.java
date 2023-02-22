@@ -2,27 +2,24 @@ package Post;
 
 public class UntrustworthyMailWorker implements MailService {
 
-    private final MailService[] workers;
-    private final RealMailService realWorker;
+    private MailService[] workers;
+    private RealMailService realMailService = new RealMailService();
 
 
     public UntrustworthyMailWorker(MailService[] workers) {
         this.workers = workers;
-        this.realWorker = new RealMailService();
     }
 
     @Override
     public Sendable processMail(Sendable mail) {
-
         for (MailService worker : workers) {
-            mail = worker.processMail(mail);
+            worker.processMail(mail);
         }
-
-        return realWorker.processMail(mail);
+        return realMailService.processMail(mail);
     }
 
     public RealMailService getRealMailService() {
-        return realWorker;
+        return realMailService;
     }
 }
 
