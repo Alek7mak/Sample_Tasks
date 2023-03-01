@@ -2,7 +2,6 @@ package Compilation;
 
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
-import java.util.Arrays;
 
 public class ParameterList<T> {
 
@@ -21,6 +20,7 @@ public class ParameterList<T> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private T data(int index) {
         checkIndex(index);
         return (T) data[index];

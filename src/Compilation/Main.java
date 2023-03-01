@@ -1,6 +1,8 @@
 package Compilation;
 
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.*;
 import java.math.BigInteger;
 import java.nio.file.Files;
@@ -159,7 +161,19 @@ class Main {
 
         loggerC.setUseParentHandlers(false);
         loggerC.addHandler(handler);
+    }
 
+    public static int[] mergeArrays(int[] a1, int[] a2) {
+        int[] resultArr = new int[a1.length + a2.length];
+
+        for (int i = 0, j = 0, k = 0; i < resultArr.length; i++) {
+            if (k == a2.length || j < a1.length && a1[j] <= a2[k]) {
+                resultArr[i] = a1[j++];
+            } else {
+                resultArr[i] = a2[k++];
+            }
+        }
+        return resultArr;
     }
 
 
@@ -168,8 +182,6 @@ class Main {
     //////////////////////////////////////////////// Main ////////////////////////////////////////////////
 
     public static void main(String[] args) throws Exception {
-
-
 
 
 
@@ -203,16 +215,6 @@ class Main {
         Stream<String> stream = Stream.of("A", "Mass", "ABs");
         List<String> list = stream.collect(Collectors.toList());
 
-        String qs = "Ab21 2ba";
-        StringBuilder leftToRight = new StringBuilder();
-//
-//        s.chars().filter(Character::isLetterOrDigit)
-//                .map(Character::toLowerCase)
-//                .forEach(leftToRight::appendCodePoint);
-
-        StringBuilder rightToLeft = new StringBuilder(leftToRight).reverse();
-
-        boolean isPalindrome = leftToRight.toString().equals(rightToLeft.toString());
     }
 
     public static BigInteger factorial(int n) {
