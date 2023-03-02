@@ -3,6 +3,8 @@ package Compilation;
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
 
+import java.util.Arrays;
+
 public class ParameterList<T> {
 
     private int size = 0;
@@ -10,7 +12,19 @@ public class ParameterList<T> {
 
     ///////////////////////// Methods /////////////////////////
 
+    public int size() {
+        return size;
+    }
 
+    public void add(T value) {
+        size++;
+        data = (size == 1) ? new Object[size] : Arrays.copyOf(data, size);
+        data[size - 1] = value;
+    }
+
+    public T get(int index) {
+        return data(index); // checked index
+    }
 
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
