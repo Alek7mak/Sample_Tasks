@@ -12,13 +12,66 @@ public class ParameterList<T> {
 
     ///////////////////////// Methods /////////////////////////
 
-    
+    public int size() {
+        return size;
+    }
+
+    public void add(T value) {
+        size++;
+        data = (size == 1) ? new Object[size] : Arrays.copyOf(data, size);
+        data[size - 1] = value;
+    }
+
+    public T get(int index) {
+        return data(index); // checked index
+    }
+
+    public T set(int index, T value) {
+        T oldValue = data(index); // checked index
+        data[index] = value;
+        return oldValue;
+    }
+
+    public T remove(int index) {
+        T oldValue = data(index);
+        size--;
+
+        for (int i = 0; i < size; i++) {
+            if (i >= index) {
+                data[i] = data[i + 1];
+            }
+        }
+        data = Arrays.copyOf(data, size);
+        return oldValue;
+    }
+
+    public void insert(int index, T value) {
+        checkIndex(index); // checked index
+        size++;
+        data = Arrays.copyOf(data, size);
+
+        for (int i = size - 1; i >= 0; i--) {
+            if (i >= index) {
+                data[i] = data[i - 1];
+            }
+        }
+        data[index] = value;
+    }
+
+    public int find(T value) {
+        for (int i = 0; i < size; i++) {
+            if (data[i].equals(value)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
     private void checkIndex(int index) {
         if (index < 0 || index >= size) {
-            throw new ArrayIndexOutOfBoundsException("Wrong index!");
+            throw new ArrayIndexOutOfBoundsException("Array index out of bounds!");
         }
     }
 
