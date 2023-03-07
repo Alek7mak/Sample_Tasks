@@ -18,7 +18,7 @@ public class ParameterList<T> {
 
     public void add(T value) {
         size++;
-        data = (size == 1) ? new Object[size] : Arrays.copyOf(data, size);
+        data = (size == 1) ? new Object[1] : Arrays.copyOf(data, size);
         data[size - 1] = value;
     }
 
@@ -33,7 +33,7 @@ public class ParameterList<T> {
     }
 
     public T remove(int index) {
-        T oldValue = data(index);
+        T oldValue = data(index); // checked index
         size--;
 
         for (int i = 0; i < size; i++) {
@@ -60,9 +60,7 @@ public class ParameterList<T> {
 
     public int find(T value) {
         for (int i = 0; i < size; i++) {
-            if (data[i].equals(value)) {
-                return i;
-            }
+            if (data[i].equals(value)) return i;
         }
         return -1;
     }

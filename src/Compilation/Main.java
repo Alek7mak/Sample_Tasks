@@ -177,11 +177,39 @@ class Main {
     }
 
 
+    public static String primer(int a, int b) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(a).append(" + ").append(b).append(" = ").append(a + b);
+        return sb.toString();
+    }
+
 
 
     //////////////////////////////////////////////// Main ////////////////////////////////////////////////
 
     public static void main(String[] args) throws Exception {
+
+        Scanner sc = new Scanner(System.in);
+        char[] chars = sc.nextLine().toCharArray();
+        StringBuilder result = new StringBuilder();
+        int sum = 0;
+
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] >= 48 && chars[i] <= 57) {
+                result.append(chars[i]).append("+");
+                sum += chars[i] - '0';
+            }
+        }
+
+        if (result.length() == 0) {
+            System.out.println("ERROR");
+        } else {
+            result.replace(result.length() - 1, result.length(), "=").append(sum);
+            System.out.println(result);
+        }
+
+
+
 
 
 
