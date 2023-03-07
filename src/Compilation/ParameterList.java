@@ -3,6 +3,7 @@ package Compilation;
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class ParameterList<T> {
@@ -37,9 +38,7 @@ public class ParameterList<T> {
         size--;
 
         for (int i = 0; i < size; i++) {
-            if (i >= index) {
-                data[i] = data[i + 1];
-            }
+            if (i >= index) data[i] = data[i + 1];
         }
         data = Arrays.copyOf(data, size);
         return oldValue;
