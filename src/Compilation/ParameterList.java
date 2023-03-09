@@ -38,14 +38,16 @@ public class ParameterList<T> {
         size--;
 
         for (int i = 0; i < size; i++) {
-            if (i >= index) data[i] = data[i + 1];
+            if (i >= index) {
+                data[i] = data[i + 1];
+            }
         }
         data = Arrays.copyOf(data, size);
         return oldValue;
     }
 
     public void insert(int index, T value) {
-        checkIndex(index); // checked index
+        checkIndex(index);
         size++;
         data = Arrays.copyOf(data, size);
 
