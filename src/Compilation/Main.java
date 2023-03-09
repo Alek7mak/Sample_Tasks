@@ -26,23 +26,6 @@ class Main {
         return sum;
     }
 
-    static class Animal implements Serializable {
-        private final String name;
-
-        public Animal(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (o instanceof Animal) {
-                return Objects.equals(name, ((Animal) o).name);
-            }
-            return false;
-        }
-    }
-
-
     public static <T> Set<T> symmetricDifference(Set<? extends T> set1, Set<? extends T> set2) {
         Set<T> setClone1 = new HashSet<>(set1);
         Set<T> setClone2 = new HashSet<>(set2);
@@ -62,82 +45,12 @@ class Main {
         return x -> condition.test(x) ? ifTrue.apply(x) : ifFalse.apply(x);
     }
 
-    public static <T> void findMinMax(
-            Stream<? extends T> stream,
-            Comparator<? super T> order,
-            BiConsumer<? super T, ? super T> minMaxConsumer) {
-
-        List<T> list = stream.collect(Collectors.toList());
-
-        if (list.isEmpty()) {
-            minMaxConsumer.accept(null, null);
-        } else {
-            minMaxConsumer.accept(list.stream().max(order).get(), list.stream().min(order).get());
-        }
-    }
-
-
-    public static void stockBuy(int m, int[] array) {
-        for (int i = 0; i < array.length - 1; i++) {
-            if (array[i] >= m) continue;
-            for (int j = i + 1; j < array.length; j++) {
-                if (array[i] + array[j] == m) {
-                    System.out.println(i + " " + j);
-                }
-            }
-        }
-    }
-
-
-
-
-    public static String hashPass(String password) {
-        int code = password.hashCode();
-        return Integer.toString(code);
-    }
-
-    public static String allowedChars = "0123456789";
-
-    public static String bruteforcePass(String hashedPass) {
-        int code=Integer.parseInt(hashedPass);
-        for (int i = 0; i < 100000; i++) {
-            String hashed = Integer.toString(i);
-            int code2 = hashed.hashCode();
-            if(code==code2)
-                return hashed;
-        }
-        for (int i = 0; i < 10000; i++) {
-            String hashed ="0" + i;
-            int code2 = hashed.hashCode();
-            if(code==code2)
-                return hashed;
-        }
-        for (int i = 0; i < 1000; i++) {
-            String hashed ="00" + i;
-            int code2 = hashed.hashCode();
-            if(code==code2)
-                return hashed;
-        }
-        for (int i = 0; i < 100; i++) {
-            String hashed ="000" + i;
-            int code2 = hashed.hashCode();
-            if(code==code2)
-                return hashed;
-        }
-        for (int i = 0; i < 10; i++) {
-            String hashed ="0000" + i;
-            int code2 = hashed.hashCode();
-            if(code==code2)
-                return hashed;
-        }
-        return "";
-    }
 
     public static double integrate(DoubleUnaryOperator f, double a, double b) {
         double step = 1e-6;
         double result = 0;
 
-        for (double i = a; i <= b;) {
+        for (double i = a; i <= b; ) {
             result += step * f.applyAsDouble(a);
             a += step;
         }
@@ -183,40 +96,52 @@ class Main {
         return sb.toString();
     }
 
+    public static class AsciiCharSequence implements CharSequence {
 
+        private final byte[] data;
+
+        public AsciiCharSequence(byte[] data) {
+            this.data = data.clone();
+        }
+
+        @Override
+        public int length() {
+            return data.length;
+        }
+
+        @Override
+        public char charAt(int index) {
+            return (char) data[index];
+        }
+
+        @Override
+        public CharSequence subSequence(int start, int end) {
+            byte[] result = Arrays.copyOfRange(data, start, end);
+            return new AsciiCharSequence(result);
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder result = new StringBuilder();
+
+            for (byte b : data) {
+                result.append((char) b);
+            }
+            return result.toString();
+        }
+    }
 
     //////////////////////////////////////////////// Main ////////////////////////////////////////////////
 
     public static void main(String[] args) throws Exception {
 
-        Scanner sc = new Scanner(System.in);
-        char[] chars = sc.nextLine().toCharArray();
-        StringBuilder result = new StringBuilder();
-        int sum = 0;
+        byte[] byteArray = {65, 108, 101, 107, 115};
 
-        for (int i = 0; i < chars.length; i++) {
-            if (chars[i] >= 48 && chars[i] <= 57) {
-                result.append(chars[i]).append("+");
-                sum += chars[i] - '0';
-            }
-        }
+        AsciiCharSequence word = new AsciiCharSequence(byteArray);
+        System.out.println(word);
 
-        if (result.length() == 0) {
-            System.out.println("ERROR");
-        } else {
-            result.replace(result.length() - 1, result.length(), "=").append(sum);
-            System.out.println(result);
-        }
-
-
-
-
-
-
-
-
-
-
+        byteArray[1] = 109;
+        System.out.println(word);
 
         Set<String> set = new HashSet<>();
         Stream<String> stream1 = set.stream();
@@ -224,11 +149,10 @@ class Main {
 //        IntStream chars = "word".chars();
 
         Path path = Paths.get("C:/Java/Sample_Tasks");
-        Stream<Path> stream2 = Files.list(path);
-        Stream<Path> stream3 = Files.walk(path);
+//        Stream<Path> stream2 = Files.list(path);
+//        Stream<Path> stream3 = Files.walk(path);
 
         DoubleStream randomNumbers = DoubleStream.generate(Math::random);
-
 
 
         IntStream hundredInt = IntStream.range(0, 11);
@@ -244,118 +168,6 @@ class Main {
 
         Stream<String> stream = Stream.of("A", "Mass", "ABs");
         List<String> list = stream.collect(Collectors.toList());
-
-    }
-
-    public static BigInteger factorial(int n) {
-        return IntStream.rangeClosed(1, n)
-                .mapToObj(BigInteger::valueOf)
-                .reduce(BigInteger.ONE, BigInteger::multiply);
-    }
-
-
-    public static class Pair<T, U> {
-
-        private final T left;
-        private final U right;
-
-        private Pair(T left, U right) {
-            this.left = left;
-            this.right = right;
-        }
-
-        public static <T, E> Pair<T, E> of(T left, E right) {
-            return new Pair<>(left, right);
-        }
-
-        public T getFirst() {
-            return left;
-        }
-
-        public U getSecond() {
-            return right;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Pair<?, ?> pair = (Pair<?, ?>) o;
-            return Objects.equals(left, pair.left) && Objects.equals(right, pair.right);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(left, right);
-        }
-    }
-
-    public static GenMethod[] deserializeAnimalArray(byte[] data) {
-        int buff;
-
-        try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(data))) {
-            buff = in.readInt();
-            GenMethod[] animals = new GenMethod[buff];
-
-            for (int i = 0; i < buff; i++) {
-                animals[i] = (GenMethod) in.readObject();
-            }
-            in.close();
-            return animals;
-
-        } catch (Exception e) {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    class GenMethod implements Serializable {
-        private final String name;
-
-        public GenMethod(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj instanceof GenMethod) {
-                return Objects.equals(name, ((GenMethod) obj).name);
-            }
-            return false;
-        }
-    }
-
-    static void generator (int n,int k) {
-        HashSet<String> set = new HashSet<>();
-        int x = 0;
-        String s = "";
-        String s1 = "";
-        boolean flag = false;
-
-        for (int i = (int) Math.pow(10, (n - 1)); i < ((int) Math.pow(10, n) - 1); i++) {
-            s = String.valueOf(i);
-
-            for (int j = 0; j < s.length(); j++) {
-                String[] arr = s.split("");
-                x = Integer.parseInt(arr[j]);
-
-                if (!(x >= 1 && x <= k)) {
-                    flag = false;
-                    break;
-                } else {
-                    flag = true;
-                }
-            }
-
-            if (flag) {
-                s1 = s.replace("", " ").trim();
-                set.add(s1);
-            }
-        }
-        ArrayList<String> list = new ArrayList<>(set);
-        Collections.sort(list);
-
-        for (String r : list)
-            System.out.println(r);
 
     }
 }

@@ -24,17 +24,17 @@ public class ParameterList<T> {
     }
 
     public T get(int index) {
-        return data(index); // checked index
+        return data(index);
     }
 
     public T set(int index, T value) {
-        T oldValue = data(index); // checked index
+        T oldValue = data(index);
         data[index] = value;
         return oldValue;
     }
 
     public T remove(int index) {
-        T oldValue = data(index); // checked index
+        T oldValue = data(index);
         size--;
 
         for (int i = 0; i < size; i++) {
@@ -61,7 +61,9 @@ public class ParameterList<T> {
 
     public int find(T value) {
         for (int i = 0; i < size; i++) {
-            if (data[i].equals(value)) return i;
+            if (data[i].equals(value)) {
+                return i;
+            }
         }
         return -1;
     }
