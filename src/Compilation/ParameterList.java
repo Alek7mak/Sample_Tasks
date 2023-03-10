@@ -4,6 +4,7 @@ package Compilation;
 
 
 import java.lang.reflect.Array;
+import java.net.BindException;
 import java.util.Arrays;
 
 public class ParameterList<T> {
@@ -12,61 +13,7 @@ public class ParameterList<T> {
     private Object[] data;
 
     ///////////////////////// Methods /////////////////////////
-
-    public int size() {
-        return size;
-    }
-
-    public void add(T value) {
-        size++;
-        data = (size == 1) ? new Object[1] : Arrays.copyOf(data, size);
-        data[size - 1] = value;
-    }
-
-    public T get(int index) {
-        return data(index);
-    }
-
-    public T set(int index, T value) {
-        T oldValue = data(index);
-        data[index] = value;
-        return oldValue;
-    }
-
-    public T remove(int index) {
-        T oldValue = data(index);
-        size--;
-
-        for (int i = 0; i < size; i++) {
-            if (i >= index) {
-                data[i] = data[i + 1];
-            }
-        }
-        data = Arrays.copyOf(data, size);
-        return oldValue;
-    }
-
-    public void insert(int index, T value) {
-        checkIndex(index);
-        size++;
-        data = Arrays.copyOf(data, size);
-
-        for (int i = size - 1; i >= 0; i--) {
-            if (i >= index) {
-                data[i] = data[i - 1];
-            }
-        }
-        data[index] = value;
-    }
-
-    public int find(T value) {
-        for (int i = 0; i < size; i++) {
-            if (data[i].equals(value)) {
-                return i;
-            }
-        }
-        return -1;
-    }
+    
 
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
