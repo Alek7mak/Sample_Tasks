@@ -13,6 +13,10 @@ public class ParameterList<T> {
         return size;
     }
 
+    public void add(T value) {
+        
+    }
+
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
     private void checkIndex(int index) {
