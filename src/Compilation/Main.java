@@ -1,10 +1,8 @@
 package Compilation;
 
-
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.*;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -131,17 +129,30 @@ class Main {
         }
     }
 
+    public static String readAsString(InputStream inputStream, Charset charset) throws IOException {
+        StringBuilder result = new StringBuilder();
+        Reader isr = new InputStreamReader(inputStream, charset);
+        int read;
+
+        while ((read = isr.read()) != -1) {
+            result.append((char) read);
+        }
+        return result.toString();
+    }
+
+
+
+
     //////////////////////////////////////////////// Main ////////////////////////////////////////////////
 
     public static void main(String[] args) throws Exception {
 
+
+
+
+
+
         byte[] byteArray = {65, 108, 101, 107, 115};
-
-        AsciiCharSequence word = new AsciiCharSequence(byteArray);
-        System.out.println(word);
-
-        byteArray[1] = 109;
-        System.out.println(word);
 
         Set<String> set = new HashSet<>();
         Stream<String> stream1 = set.stream();
@@ -167,7 +178,7 @@ class Main {
 
 
         Stream<String> stream = Stream.of("A", "Mass", "ABs");
-        List<String> list = stream.collect(Collectors.toList());
+        List<String> list2 = stream.collect(Collectors.toList());
 
     }
 }

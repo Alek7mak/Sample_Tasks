@@ -1,12 +1,5 @@
 package Compilation;
 
-// size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
-
-
-import jdk.vm.ci.meta.Value;
-
-import java.lang.reflect.Array;
-import java.net.BindException;
 import java.util.Arrays;
 
 public class ParameterList<T> {
@@ -16,6 +9,9 @@ public class ParameterList<T> {
 
     ///////////////////////// Methods /////////////////////////
 
+    public int size() {
+        return size;
+    }
 
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
