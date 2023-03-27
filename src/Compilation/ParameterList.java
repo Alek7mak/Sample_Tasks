@@ -1,5 +1,6 @@
 package Compilation;
 
+
 import java.util.Arrays;
 
 public class ParameterList<T> {
@@ -13,15 +14,7 @@ public class ParameterList<T> {
         return size;
     }
 
-    public void add(T value) {
-        size++;
-        if (size == 1) {
-            data = new Object[1];
-        } else {
-            data = Arrays.copyOf(data, size);
-        }
-        data[size - 1] = value;
-    }
+    
 
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
