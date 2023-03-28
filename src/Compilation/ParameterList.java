@@ -9,10 +9,6 @@ public class ParameterList<T> {
     private Object[] data;
 
     ///////////////////////// Methods /////////////////////////
-    
-    public int size() {
-        return size;
-    }
 
     
 
