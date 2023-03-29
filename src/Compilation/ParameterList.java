@@ -10,7 +10,10 @@ public class ParameterList<T> {
 
     ///////////////////////// Methods /////////////////////////
 
-
+    public int size() {
+        return size;
+    }
+    
 
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
