@@ -147,21 +147,8 @@ class Main {
 
     public static void main(String[] args) throws Exception {
 
-        ParameterList<Integer> parList = new ParameterList<>();
-
-        parList.add(0);
-        parList.add(1);
-        parList.add(2);
-        parList.add(3);
-        parList.add(4);
-        parList.add(5);
 
 
-        parList.insert(1, 13);
-
-        System.out.println(parList.size());
-
-        System.out.println(parList);
 
 
 
