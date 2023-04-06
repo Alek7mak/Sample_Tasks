@@ -34,39 +34,6 @@ public class ParameterList<T> {
         return oldValue;
     }
 
-    public T remove(int index) {
-        T oldValue = data(index); // checked index
-        size--;
-
-        for (int i = 0; i < size; i++) {
-            if (i >= index) {
-                data[i] = data[i + 1];
-            }
-        }
-        data = Arrays.copyOf(data, size);
-        return oldValue;
-    }
-
-    public void insert(int index, T value) {
-        checkIndex(index); // checked index
-        size++;
-        data = Arrays.copyOf(data, size);
-
-        for (int i = size - 1; i >= 0; i--) {
-            if (i >= index) {
-                data[i] = data[i - 1];
-            }
-        }
-        data[index] = value;
-    }
-
-    public int find(T value) {
-        for (int i = 0; i < size; i++) {
-            if (data[i].equals(value)) return i;
-        }
-        return -1;
-    }
-
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
     private void checkIndex(int index) {
