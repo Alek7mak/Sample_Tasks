@@ -24,14 +24,7 @@ public class ParameterList<T> {
         data[size - 1] = value;
     }
 
-    public T get(int index) {
-        return data(index); // checked index
-    }
 
-    public T set(int index, T value) {
-        T oldValue = data(index); // checked index
-        return oldValue;
-    }
 
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
