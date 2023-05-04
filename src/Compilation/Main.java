@@ -1,9 +1,7 @@
 package Compilation;
 
 import java.io.*;
-import java.math.BigInteger;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -140,6 +138,85 @@ class Main {
         return result.toString();
     }
 
+
+    interface TextAnalyzer {
+        Label processText(String text);
+    }
+
+    enum Label {
+        SPAM, NEGATIVE_TEXT, TOO_LONG, OK
+    }
+
+    public Label checkLabels(TextAnalyzer[] analyzers, String text) {
+        for (TextAnalyzer ta : analyzers) {
+            Label result = ta.processText(text);
+            if (result != Label.OK) {
+                return result;
+            }
+        }
+        return Label.OK;
+    }
+
+    public abstract class KeywordAnalyser implements TextAnalyzer {
+        abstract protected String[] getKeywords();
+        abstract protected Label getLabel();
+
+        @Override
+        public Label processText(String text) {
+            for (String keyword : getKeywords()) {
+                if (text.contains(keyword)) return getLabel();
+            }
+            return Label.OK;
+        }
+    }
+
+    public class SpamAnalyzer extends KeywordAnalyser {
+
+        private final String[] keywords;
+
+        public SpamAnalyzer(String[] keywords) {
+            this.keywords = keywords;
+        }
+
+        @Override
+        protected String[] getKeywords() {
+            return keywords;
+        }
+
+        @Override
+        protected Label getLabel() {
+            return Label.SPAM;
+        }
+    }
+
+    public class NegativeTextAnalyzer extends KeywordAnalyser {
+
+        private final String[] keywords = new String[]{":(", "=(", ":|"};
+
+        @Override
+        protected String[] getKeywords() {
+            return new String[0];
+        }
+
+        @Override
+        protected Label getLabel() {
+            return Label.NEGATIVE_TEXT;
+        }
+    }
+
+    public class TooLongTextAnalyzer implements TextAnalyzer {
+
+        private final int maxLength;
+
+        public TooLongTextAnalyzer(int maxLength) {
+            this.maxLength = maxLength;
+        }
+
+        @Override
+        public Label processText(String text) {
+            return text.length() <= maxLength ? Label.OK : Label.TOO_LONG;
+        }
+    }
 
 
 
