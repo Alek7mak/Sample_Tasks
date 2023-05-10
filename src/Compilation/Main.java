@@ -218,6 +218,17 @@ class Main {
         }
     }
 
+    public static void printOddNumbers(int[] arr) {
+        StringBuilder result = new StringBuilder();
+
+        for (int j : arr) {
+            if (j % 2 != 0) {
+                result.append(j).append(",");
+            }
+        }
+        System.out.println(result.length() == 0 ? "" : result.substring(0, result.length() - 1));
+    }
+
 
 
     //////////////////////////////////////////////// Main ////////////////////////////////////////////////
@@ -225,6 +236,7 @@ class Main {
     public static void main(String[] args) throws Exception {
 
 
+        printOddNumbers(new int[]{});
 
 
 
