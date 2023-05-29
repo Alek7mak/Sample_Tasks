@@ -2,6 +2,7 @@ package Compilation;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -112,8 +113,7 @@ class Main {
 
         @Override
         public CharSequence subSequence(int start, int end) {
-            byte[] result = Arrays.copyOfRange(data, start, end);
-            return new AsciiCharSequence(result);
+            return new AsciiCharSequence(Arrays.copyOfRange(data, start, end));
         }
 
         @Override
@@ -125,17 +125,6 @@ class Main {
             }
             return result.toString();
         }
-    }
-
-    public static String readAsString(InputStream inputStream, Charset charset) throws IOException {
-        StringBuilder result = new StringBuilder();
-        Reader isr = new InputStreamReader(inputStream, charset);
-        int read;
-
-        while ((read = isr.read()) != -1) {
-            result.append((char) read);
-        }
-        return result.toString();
     }
 
 
@@ -218,25 +207,42 @@ class Main {
         }
     }
 
-    public static void printOddNumbers(int[] arr) {
-        StringBuilder result = new StringBuilder();
+    public static void print(InputStream inputStream, OutputStream outputStream) throws IOException {
+        int read;
 
-        for (int j : arr) {
-            if (j % 2 != 0) {
-                result.append(j).append(",");
+        while ((read = inputStream.read()) != -1) {
+            if ((byte) read % 2 == 0) {
+                outputStream.write((byte) read);
             }
         }
-        System.out.println(result.length() == 0 ? "" : result.substring(0, result.length() - 1));
+        outputStream.flush();
     }
-
 
 
     //////////////////////////////////////////////// Main ////////////////////////////////////////////////
 
     public static void main(String[] args) throws Exception {
 
+        byte[] bytes = new byte[]{48, 49, 50, 51};
 
-        printOddNumbers(new int[]{});
+        InputStream input = new ByteArrayInputStream(bytes);
+        OutputStream output = new ByteArrayOutputStream(10);
+        Charset charset = StandardCharsets.UTF_8;
+
+        Scanner sc = new Scanner(System.in);
+        double sum = 0;
+        sc.useLocale(Locale.ENGLISH);
+
+        while (sc.hasNext()) {
+            if (sc.hasNextDouble()) {
+                sum += sc.nextDouble();
+            } else {
+                sc.next();
+            }
+        }
+
+        System.out.printf("%.6f", sum);
+
 
 
 
