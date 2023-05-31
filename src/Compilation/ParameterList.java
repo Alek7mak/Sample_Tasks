@@ -25,7 +25,26 @@ public class ParameterList<T> {
     }
 
     public T get(int index) {
-        
+        return data(index); // checked index
+    }
+
+    public T set(int index, T value) {
+        T oldValue = data(index); //checked index
+        data[index] = value;
+        return oldValue;
+    }
+
+    public T remove(int index) {
+        T oldValue = data(index); //checked index
+        size--;
+
+        for (int i = 0; i < size; i++) {
+            if (i >= index) {
+                data[i] = data[i + 1];
+            }
+        }
+        data = Arrays.copyOf(data, size);
+        return oldValue;
     }
 
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
