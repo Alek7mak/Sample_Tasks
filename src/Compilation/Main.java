@@ -223,6 +223,13 @@ class Main {
 
     public static void main(String[] args) throws Exception {
 
+        Scanner sc = new Scanner(System.in);
+
+
+
+
+        sc.close();
+
         byte[] bytes = new byte[]{48, 49, 50, 51};
 
         InputStream input = new ByteArrayInputStream(bytes);
