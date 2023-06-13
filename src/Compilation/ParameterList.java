@@ -60,12 +60,6 @@ public class ParameterList<T> {
         data[index] = value;
     }
 
-    public int find(T value) {
-        for (int i = 0; i < size; i++) {
-            if (data[i].equals(value)) return i;
-        }
-        return -1;
-    }
 
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
