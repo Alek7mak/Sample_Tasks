@@ -1,14 +1,16 @@
 package Compilation;
 
+import jdk.jshell.spi.SPIResolutionException;
+import org.w3c.dom.Node;
+
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.*;
 import java.util.logging.*;
 import java.util.stream.*;
+
 
 class Main {
 
@@ -32,14 +34,6 @@ class Main {
         setClone1.addAll(setClone2);
 
         return setClone1;
-    }
-
-    public static <T, U> Function<T, U> ternaryOperator(
-            Predicate<? super T> condition,
-            Function<? super T, ? extends U> ifTrue,
-            Function<? super T, ? extends U> ifFalse) {
-
-        return x -> condition.test(x) ? ifTrue.apply(x) : ifFalse.apply(x);
     }
 
 
@@ -118,93 +112,9 @@ class Main {
 
         @Override
         public String toString() {
-            StringBuilder result = new StringBuilder();
-
-            for (byte b : data) {
-                result.append((char) b);
-            }
-            return result.toString();
-        }
-    }
-
-
-    interface TextAnalyzer {
-        Label processText(String text);
-    }
-
-    enum Label {
-        SPAM, NEGATIVE_TEXT, TOO_LONG, OK
-    }
-
-    public Label checkLabels(TextAnalyzer[] analyzers, String text) {
-        for (TextAnalyzer ta : analyzers) {
-            Label result = ta.processText(text);
-            if (result != Label.OK) {
-                return result;
-            }
-        }
-        return Label.OK;
-    }
-
-    public abstract class KeywordAnalyser implements TextAnalyzer {
-        abstract protected String[] getKeywords();
-        abstract protected Label getLabel();
-
-        @Override
-        public Label processText(String text) {
-            for (String keyword : getKeywords()) {
-                if (text.contains(keyword)) return getLabel();
-            }
-            return Label.OK;
-        }
-    }
-
-    public class SpamAnalyzer extends KeywordAnalyser {
-
-        private final String[] keywords;
-
-        public SpamAnalyzer(String[] keywords) {
-            this.keywords = keywords;
+            return new String(data);
         }
 
-        @Override
-        protected String[] getKeywords() {
-            return keywords;
-        }
-
-        @Override
-        protected Label getLabel() {
-            return Label.SPAM;
-        }
-    }
-
-    public class NegativeTextAnalyzer extends KeywordAnalyser {
-
-        private final String[] keywords = new String[]{":(", "=(", ":|"};
-
-        @Override
-        protected String[] getKeywords() {
-            return new String[0];
-        }
-
-        @Override
-        protected Label getLabel() {
-            return Label.NEGATIVE_TEXT;
-        }
-    }
-
-    public class TooLongTextAnalyzer implements TextAnalyzer {
-
-        private final int maxLength;
-
-        public TooLongTextAnalyzer(int maxLength) {
-            this.maxLength = maxLength;
-        }
-
-        @Override
-        public Label processText(String text) {
-            return text.length() <= maxLength ? Label.OK : Label.TOO_LONG;
-        }
     }
 
     public static void print(InputStream inputStream, OutputStream outputStream) throws IOException {
@@ -218,37 +128,64 @@ class Main {
         outputStream.flush();
     }
 
+    @FunctionalInterface
+    public interface NumberGenerator<T extends Number> {
+        boolean cond(T arg);
+    }
+
+    public static NumberGenerator<? super Number> getGenerator() {
+        return T -> T.intValue() > 0;
+    }
+
+
+    public <T, U> Function<T, U> ternaryOperator(
+            Predicate<? super T> condition,
+            Function<? super T, ? extends U> ifTrue,
+            Function<? super T, ? extends U> ifFalse) {
+        return x -> condition.test(x) ? ifTrue.apply(x) : ifFalse.apply(x);
+    }
+
+    public static IntStream pseudoRandomStream(int seed) {
+        return IntStream.iterate(seed, n -> n * n / 10 % 1000);
+    }
+
+    public <T> void findMinMax(
+            Stream<? extends T> stream,
+            Comparator<? super T> order,
+            BiConsumer<? super T, ? super T> minMaxConsumer) {
+
+        List<T> list = stream.collect(Collectors.toList());
+
+        if (list.isEmpty()) {
+            minMaxConsumer.accept(null, null);
+        } else {
+            minMaxConsumer.accept(list.stream().min(order).get(), list.stream().max(order).get());
+        }
+        stream.close();
+    }
+
+    public static int removeDuplicates(int[] nums) {
+        int count = 0;
+
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (nums[i] != nums[i + 1]) {
+                nums[count] = nums[i];
+                count++;
+            }
+        }
+        return count + 1;
+    }
+
 
     //////////////////////////////////////////////// Main ////////////////////////////////////////////////
 
     public static void main(String[] args) throws Exception {
 
-        Scanner sc = new Scanner(System.in);
+        String[] strs = {"flower", "flow", "flight"};
+        int[] nums = {1, 1, 2};
 
-
-
-
-        sc.close();
-
-        byte[] bytes = new byte[]{48, 49, 50, 51};
-
-        InputStream input = new ByteArrayInputStream(bytes);
-        OutputStream output = new ByteArrayOutputStream(10);
-        Charset charset = StandardCharsets.UTF_8;
-
-        Scanner sc = new Scanner(System.in);
-        double sum = 0;
-        sc.useLocale(Locale.ENGLISH);
-
-        while (sc.hasNext()) {
-            if (sc.hasNextDouble()) {
-                sum += sc.nextDouble();
-            } else {
-                sc.next();
-            }
-        }
-
-        System.out.printf("%.6f", sum);
+        System.out.println(removeDuplicates(nums));
+        System.out.println(Arrays.toString(nums));
 
 
 
@@ -257,9 +194,6 @@ class Main {
 
 
 
-
-
-        byte[] byteArray = {65, 108, 101, 107, 115};
 
         Set<String> set = new HashSet<>();
         Stream<String> stream1 = set.stream();

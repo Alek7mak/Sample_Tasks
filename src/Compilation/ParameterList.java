@@ -25,20 +25,20 @@ public class ParameterList<T> {
     }
 
     public T get(int index) {
-        return data(index); // checked index
+        return data(index); //checked index
     }
 
     public T set(int index, T value) {
-        T oldValue = data(index);
+        T oldValue = data(index); //checked index
         data[index] = value;
         return oldValue;
     }
 
     public T remove(int index) {
+        T oldValue = data(index); //checked index
         size--;
-        T oldValue = data(index); // checked index
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size - 1; i++) {
             if (i >= index) {
                 data[i] = data[i + 1];
             }
@@ -47,18 +47,6 @@ public class ParameterList<T> {
         return oldValue;
     }
 
-    public void insert(int index, T value) {
-        size++;
-        checkIndex(index);
-        data = Arrays.copyOf(data, size);
-
-        for (int i = size - 1; i >= 0; i--) {
-            if (i >= index) {
-                data[i] = data[i - 1];
-            }
-        }
-        data[index] = value;
-    }
 
 
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
