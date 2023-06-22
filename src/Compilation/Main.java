@@ -1,14 +1,14 @@
 package Compilation;
 
-import jdk.jshell.spi.SPIResolutionException;
-import org.w3c.dom.Node;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.*;
 import java.util.logging.*;
+import java.util.regex.Pattern;
 import java.util.stream.*;
 
 
@@ -176,19 +176,91 @@ class Main {
         return count + 1;
     }
 
+    static class Node {
+        Node next;
+        int data;
+
+        public Node(int data) {
+            this.data = data;
+        }
+    }
+
+    public static Node addFirst(Node node, int newData) {
+        if (node != null) {
+            Node first = new Node(newData);
+            first.next = node;
+            return first;
+        }
+        return new Node(newData);
+    }
+
+    public static Node addLast(Node node, int newData) {
+        Node tmp = node;
+
+        return node;
+    }
+
+    public static int size(Node node) {
+        int size = 0;
+
+        while (node != null) {
+            node = node.next;
+            size++;
+        }
+        return size;
+    }
+
+    public static int getLast(Node node) {
+        int count = 0;
+
+        while (node != null) {
+            node = node.next;
+            if (count == size(node)) {
+                return node.data;
+            }
+            count++;
+        }
+
+        return 0;
+    }
+
 
     //////////////////////////////////////////////// Main ////////////////////////////////////////////////
 
     public static void main(String[] args) throws Exception {
 
-        String[] strs = {"flower", "flow", "flight"};
-        int[] nums = {1, 1, 2};
+        Scanner sc = new Scanner(System.in);
+        int count = 0;
+        StringBuilder str = new StringBuilder();
 
-        System.out.println(removeDuplicates(nums));
-        System.out.println(Arrays.toString(nums));
+        while (sc.hasNextLine()) {
+            count++;
+            str.append(sc.nextLine()).append("/");
+        }
 
+        String[] strArray = str.toString().split("/");
+        String[][] matrix = new String[count][];
+        for (int i = 0; i < count; i++)
+            matrix[i] = strArray[i].split(" ");
 
+        for (int i = 0; i < matrix.length / 2; i++) {
+            int bottom = matrix.length - 1 - i;
 
+            for (int j = i; j < bottom; j++) {
+                String temp = matrix[i][j];
+                matrix[i][j] = matrix[j][matrix.length - 1 - j];
+                matrix[j][matrix.length - 1 - j] = matrix[bottom][j];
+                matrix[bottom][j] = matrix[j][matrix.length - 1 - bottom];
+                matrix[j][matrix.length - 1 - bottom] = temp;
+            }
+        }
+
+        for (String[] strings : matrix) {
+            for (int j = 0; j < strings.length; j++) {
+                System.out.println(strings[j] + " ");
+            }
+            System.out.println();
+        }
 
 
 
