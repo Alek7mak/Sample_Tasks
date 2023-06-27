@@ -17,15 +17,17 @@ abstract class KeywordAnalyzer implements TextAnalyzer {
     @Override
     public Label processText(String text) {
         for (String s : getKeywords()) {
-            if (text.contains(s)) return getLabel();
+            if (text.contains(s)) {
+                return getLabel();
+            }
         }
         return Label.OK;
     }
 }
 
 class SpamAnalyzer extends KeywordAnalyzer {
-
     private final String[] keywords;
+
 
     public SpamAnalyzer(String[] keywords) {
         this.keywords = keywords;
@@ -44,8 +46,7 @@ class SpamAnalyzer extends KeywordAnalyzer {
 
 
 class NegativeTextAnalyzer extends KeywordAnalyzer {
-
-    String[] keywords = {":(", "=(", ":|"};
+    private final String[] keywords = {":(", "=(", ":|"};
 
 
     @Override
@@ -61,31 +62,24 @@ class NegativeTextAnalyzer extends KeywordAnalyzer {
 
 
 class TooLongTextAnalyzer implements TextAnalyzer {
-
-    private int maxLength;
+    private final int maxLength;
 
     public TooLongTextAnalyzer(int maxLength) {
         this.maxLength = maxLength;
     }
 
+
     @Override
     public Label processText(String text) {
-        return (text.length() > maxLength) ? Label.TOO_LONG : Label.OK;
+        return text.length() > maxLength ? Label.TOO_LONG : Label.OK;
     }
 }
 
 public class Text {
 
-    public static double sqrt(double x) {
-        if (x < 0) {
-            throw new IllegalArgumentException("Expected non-negative number, got " + x);
-        }
-        return Math.sqrt(x);
-    }
-
     public Label checkLabels(TextAnalyzer[] analyzers, String text) {
-        for (TextAnalyzer ta : analyzers) {
-            Label result = ta.processText(text);
+        for (TextAnalyzer analyzer : analyzers) {
+            Label result = analyzer.processText(text);
             if (result != Label.OK) {
                 return result;
             }
@@ -93,4 +87,30 @@ public class Text {
         return Label.OK;
     }
 
+    public static double sqrt(double x) {
+        if (x < 0) {
+            throw new IllegalArgumentException("Expected non-negative number got " + x);
+        }
+        return Math.sqrt(x);
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

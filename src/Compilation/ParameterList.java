@@ -1,7 +1,7 @@
 package Compilation;
 
-
 import java.util.Arrays;
+
 
 public class ParameterList<T> {
 
@@ -9,43 +9,6 @@ public class ParameterList<T> {
     private Object[] data;
 
     ///////////////////////// Methods /////////////////////////
-
-    public int size() {
-        return size;
-    }
-
-    public void add(T value) {
-        size++;
-        if (size == 1) {
-            data = new Object[1];
-        } else {
-            data = Arrays.copyOf(data, size);
-        }
-        data[size - 1] = value;
-    }
-
-    public T get(int index) {
-        return data(index); //checked index
-    }
-
-    public T set(int index, T value) {
-        T oldValue = data(index); //checked index
-        data[index] = value;
-        return oldValue;
-    }
-
-    public T remove(int index) {
-        T oldValue = data(index); //checked index
-        size--;
-
-        for (int i = 0; i < size - 1; i++) {
-            if (i >= index) {
-                data[i] = data[i + 1];
-            }
-        }
-        data = Arrays.copyOf(data, size);
-        return oldValue;
-    }
 
 
 

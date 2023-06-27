@@ -229,40 +229,6 @@ class Main {
 
     public static void main(String[] args) throws Exception {
 
-        Scanner sc = new Scanner(System.in);
-        int count = 0;
-        StringBuilder str = new StringBuilder();
-
-        while (sc.hasNextLine()) {
-            count++;
-            str.append(sc.nextLine()).append("/");
-        }
-
-        String[] strArray = str.toString().split("/");
-        String[][] matrix = new String[count][];
-        for (int i = 0; i < count; i++)
-            matrix[i] = strArray[i].split(" ");
-
-        for (int i = 0; i < matrix.length / 2; i++) {
-            int bottom = matrix.length - 1 - i;
-
-            for (int j = i; j < bottom; j++) {
-                String temp = matrix[i][j];
-                matrix[i][j] = matrix[j][matrix.length - 1 - j];
-                matrix[j][matrix.length - 1 - j] = matrix[bottom][j];
-                matrix[bottom][j] = matrix[j][matrix.length - 1 - bottom];
-                matrix[j][matrix.length - 1 - bottom] = temp;
-            }
-        }
-
-        for (String[] strings : matrix) {
-            for (int j = 0; j < strings.length; j++) {
-                System.out.println(strings[j] + " ");
-            }
-            System.out.println();
-        }
-
-
 
 
 
