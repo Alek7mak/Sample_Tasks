@@ -229,10 +229,6 @@ class Main {
 
     public static void main(String[] args) throws Exception {
 
-
-
-
-
         Set<String> set = new HashSet<>();
         Stream<String> stream1 = set.stream();
 
