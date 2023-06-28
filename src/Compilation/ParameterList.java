@@ -10,7 +10,24 @@ public class ParameterList<T> {
 
     ///////////////////////// Methods /////////////////////////
 
+    public int size() {
+        return size;
+    }
 
+    public void add(T value) {
+        size++;
+        if (size == 1) {
+            data = new Object[1];
+        } else {
+            data = Arrays.copyOf(data, size);
+        }
+        data[size - 1] = value;
+    }
+
+    public T get(int index) {
+        return data(index); //checked index
+    }
+    
 
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
