@@ -26,10 +26,14 @@ public class ParameterList<T> {
     }
 
     public T get(int index) {
-        return data(index); //checked index
+        return data(index);
     }
 
-    
+    public T set(int index, T value) {
+        T oldValue = data(index); //checked index
+        data[index] = value;
+        return oldValue;
+    }
 
 // size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
 
