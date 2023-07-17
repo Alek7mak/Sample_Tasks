@@ -46,7 +46,7 @@ class SpamAnalyzer extends KeywordAnalyzer {
 
 
 class NegativeTextAnalyzer extends KeywordAnalyzer {
-    private final String[] keywords = {":(", "=(", ":|"};
+    private final String[] keywords = {":(", "=(", ":|"}; //change keywords
 
 
     @Override
@@ -93,7 +93,6 @@ public class Text {
         }
         return Math.sqrt(x);
     }
-
 }
 
 

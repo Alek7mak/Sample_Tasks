@@ -229,6 +229,11 @@ class Main {
 
     public static void main(String[] args) throws Exception {
 
+        ParameterList<Integer> sampleList = new ParameterList<>();
+
+
+
+
         Set<String> set = new HashSet<>();
         Stream<String> stream1 = set.stream();
 

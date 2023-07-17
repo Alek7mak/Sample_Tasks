@@ -25,17 +25,7 @@ public class ParameterList<T> {
         data[size - 1] = value;
     }
 
-    public T get(int index) {
-        return data(index);
-    }
-
-    public T set(int index, T value) {
-        T oldValue = data(index); //checked index
-        data[index] = value;
-        return oldValue;
-    }
-
-// size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
+    public 
 
     private void checkIndex(int index) {
         if (index < 0 || index >= size) {
@@ -58,3 +48,4 @@ public class ParameterList<T> {
         return stringBuilder.toString();
     }
 }
+// size(), add(value), get(index), set(index, value), remove(index), insert(index, value), find(value)
