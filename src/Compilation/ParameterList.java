@@ -25,7 +25,7 @@ public class ParameterList<T> {
         data[size - 1] = value;
     }
 
-    public 
+    
 
     private void checkIndex(int index) {
         if (index < 0 || index >= size) {
