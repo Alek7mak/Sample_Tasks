@@ -220,18 +220,42 @@ class Main {
             }
             count++;
         }
-
         return 0;
     }
 
+    interface Expression {
+        boolean isEquals(int n);
+    }
+
+    class ExpressionHelper {
+        static boolean isEven(int n) {
+            return n % 2 == 0;
+        }
+
+        static boolean isPositive(int n) {
+            return n > 0;
+        }
+    }
+
+    public static int sum(int[] nums, Expression func) {
+        int result = 0;
+
+        for (int i : nums) {
+            if (func.isEquals(i)) {
+                result += i;
+            }
+        }
+        return result;
+    }
 
     //////////////////////////////////////////////// Main ////////////////////////////////////////////////
 
     public static void main(String[] args) throws Exception {
 
-        ParameterList<Integer> sampleList = new ParameterList<>();
+        int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-        
+        System.out.println(sum(nums, ExpressionHelper::isEven));
+        System.out.println(sum(nums, ExpressionHelper::isPositive));
 
 
         Set<String> set = new HashSet<>();
