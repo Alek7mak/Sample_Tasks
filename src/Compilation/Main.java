@@ -223,39 +223,11 @@ class Main {
         return 0;
     }
 
-    interface Expression {
-        boolean isEquals(int n);
-    }
-
-    class ExpressionHelper {
-        static boolean isEven(int n) {
-            return n % 2 == 0;
-        }
-
-        static boolean isPositive(int n) {
-            return n > 0;
-        }
-    }
-
-    public static int sum(int[] nums, Expression func) {
-        int result = 0;
-
-        for (int i : nums) {
-            if (func.isEquals(i)) {
-                result += i;
-            }
-        }
-        return result;
-    }
-
     //////////////////////////////////////////////// Main ////////////////////////////////////////////////
 
     public static void main(String[] args) throws Exception {
 
         int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-
-        System.out.println(sum(nums, ExpressionHelper::isEven));
-        System.out.println(sum(nums, ExpressionHelper::isPositive));
 
 
         Set<String> set = new HashSet<>();
@@ -263,7 +235,7 @@ class Main {
 
 //        IntStream chars = "word".chars();
 
-        Path path = Paths.get("C:/Java/Sample_Tasks");
+        Path path = Paths.get("C:/Java/...");
 //        Stream<Path> stream2 = Files.list(path);
 //        Stream<Path> stream3 = Files.walk(path);
 
