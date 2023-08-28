@@ -176,6 +176,20 @@ class Main {
         return count + 1;
     }
 
+    interface Expression {
+        boolean isEqual(int n);
+    }
+
+    static class ExpressionHelper {
+        boolean isEven(int n) {
+            return n % 2 == 0;
+        }
+
+        boolean isPositive(int n) {
+            return n > 0;
+        }
+    }
+
     static class Node {
         Node next;
         int data;
