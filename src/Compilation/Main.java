@@ -132,11 +132,10 @@ class Main {
     public interface NumberGenerator<T extends Number> {
         boolean cond(T arg);
     }
-
+    
     public static NumberGenerator<? super Number> getGenerator() {
         return T -> T.intValue() > 0;
     }
-
 
     public <T, U> Function<T, U> ternaryOperator(
             Predicate<? super T> condition,
@@ -181,13 +180,25 @@ class Main {
     }
 
     static class ExpressionHelper {
-        boolean isEven(int n) {
+        static boolean isEven(int n) {
             return n % 2 == 0;
         }
 
-        boolean isPositive(int n) {
+        static boolean isPositive(int n) {
             return n > 0;
         }
+    }
+
+    static int sum(int[] nums, Expression func) {
+        int result = 0;
+
+        for (int i : nums) {
+            if (func.isEqual(i)) {
+                result += i;
+            }
+        }
+
+        return result;
     }
 
     static class Node {
